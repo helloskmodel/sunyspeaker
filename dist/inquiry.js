@@ -1,3 +1,4 @@
+const t = value => window.sunyTranslate ? window.sunyTranslate(value) : value;
 // Set only to the business email confirmed by the site owner.
 const inquiryEmail = '';
 const dialog = document.createElement('dialog');
@@ -37,23 +38,23 @@ dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.clo
 dialog.addEventListener('close', () => opener?.focus());
 function inquiryText() {
  const data = new FormData(form);
- return `SUNY 产品询盘\n产品型号：${product.model}\n姓名：${data.get('name')}\n邮箱：${data.get('email')}\n公司：${data.get('company') || '未填写'}\n采购数量：${data.get('quantity')} 件\n具体需求：${data.get('message') || '未填写'}\n\n产品参数（彩页资料）：\n${product.specs}`;
+ return `SUNY ${t('产品询盘')}\n${t('产品型号')}: ${product.model}\n${t('姓名 *').replace(' *','')}: ${data.get('name')}\n${t('联系邮箱 *').replace(' *','')}: ${data.get('email')}\n${t('公司')}: ${data.get('company') || t('未填写')}\n${t('预计采购数量（件） *').replace(' *','')}: ${data.get('quantity')}\n${t('具体需求')}: ${data.get('message') || t('未填写')}\n\n${t('产品参数（彩页资料）')}:\n${product.specs}`;
 }
 form.addEventListener('submit', event => {
  event.preventDefault();
  const body = inquiryText();
  if (inquiryEmail) {
-  window.location.href = `mailto:${inquiryEmail}?subject=${encodeURIComponent('SUNY 产品询盘 - ' + product.model)}&body=${encodeURIComponent(body)}`;
-  status.textContent = '已请求打开邮件应用，请在那里完成发送。若未打开，可复制询盘内容。';
+  window.location.href = `mailto:${inquiryEmail}?subject=${encodeURIComponent('SUNY ' + t('产品询盘') + ' - ' + product.model)}&body=${encodeURIComponent(body)}`;
+  status.textContent = t('已请求打开邮件应用，请在那里完成发送。若未打开，可复制询盘内容。');
  } else {
   const url = URL.createObjectURL(new Blob(['\ufeff', body], {type:'text/plain;charset=utf-8'}));
-  const a = document.createElement('a'); a.href = url; a.download = `SUNY-${product.model.replace(/[^a-z0-9-]/gi,'')}-询盘.txt`; a.click();
+  const a = document.createElement('a'); a.href = url; a.download = `SUNY-${product.model.replace(/[^a-z0-9-]/gi,'')}-inquiry.txt`; a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  status.textContent = '询盘单已生成并开始下载，尚未发送。';
+  status.textContent = t('询盘单已生成并开始下载，尚未发送。');
  }
 });
 dialog.querySelector('#copy-inquiry').addEventListener('click', async () => {
  if (!form.reportValidity()) return;
- try { await navigator.clipboard.writeText(inquiryText()); status.textContent = '询盘内容已复制，尚未发送。'; }
- catch { status.textContent = '无法访问剪贴板，请使用下载询盘单。'; }
+ try { await navigator.clipboard.writeText(inquiryText()); status.textContent = t('询盘内容已复制，尚未发送。'); }
+ catch { status.textContent = t('无法访问剪贴板，请使用下载询盘单。'); }
 });
