@@ -1,6 +1,6 @@
 const t = value => window.sunyTranslate ? window.sunyTranslate(value) : value;
 // Set only to the business email confirmed by the site owner.
-const inquiryEmail = '';
+const inquiryEmail = 'gm@xmsuny.com';
 const dialog = document.createElement('dialog');
 dialog.className = 'inquiry-dialog';
 dialog.setAttribute('aria-labelledby', 'inquiry-title');
