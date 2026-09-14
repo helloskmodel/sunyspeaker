@@ -14,7 +14,7 @@
 .hero .button,.hero .text-link{font-size:13px}
 .hero .button{padding:13px 20px}
 .page-hero p:last-child{font-size:16px;margin-top:22px}
-@media(max-width:980px){.hero h1,.page-hero h1{font-size:40px}}
+@media(max-width:980px){.hero h1,.page-hero h1{font-size:40px}.hero h1{font-size:clamp(28px,3.4vw,34px)}}
 @media(max-width:650px){.hero h1,.page-hero h1{font-size:30px}.hero .lead{font-size:15px;margin:16px 0 10px}.hero .keywords{font-size:10px}.page-hero p:last-child{font-size:15px}}
 /* Keep section headings below the hero headline */
 .section h2,.final-cta h2{font-size:clamp(32px,3.4vw,50px);letter-spacing:-.04em}
